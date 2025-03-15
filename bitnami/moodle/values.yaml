@@ -1003,3 +1003,9 @@ networkPolicy:
   ##
   ingressNSMatchLabels: {}
   ingressNSPodMatchLabels: {}
+
+## @param volumeMountsOverride [object] Override default container volume mounts
+volumeMountsOverride: []
+
+## @param volumesOverride [object] Override default container volumes
+volumesOverride: []
