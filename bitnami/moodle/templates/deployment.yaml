@@ -156,7 +156,7 @@ spec:
           {{- end }}
           env:
             - name: BITNAMI_DEBUG
-              value: {{ ternary "true" "false" .Values.image.debug | quote }}
+              value: true
             - name: ALLOW_EMPTY_PASSWORD
               value: {{ ternary "yes" "no" .Values.allowEmptyPassword | quote }}
             - name: APACHE_HTTP_PORT_NUMBER
