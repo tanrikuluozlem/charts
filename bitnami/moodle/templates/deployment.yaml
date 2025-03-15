@@ -86,12 +86,16 @@ spec:
           resources: {{- include "common.resources.preset" (dict "type" .Values.volumePermissions.resourcesPreset) | nindent 12 }}
           {{- end }}
           volumeMounts:
+          {{- if .Values.volumeMountsOverride }}
+          {{- toYaml .Values.volumeMountsOverride | nindent 12 }}
+          {{- else }}
             - name: moodle-data
               mountPath: /bitnami/moodle
               subPath: moodle
             - name: moodle-data
               mountPath: /bitnami/moodledata
               subPath: moodledata
+          {{- end }}
         {{- end }}
         {{- if .Values.certificates.customCAs }}
         - name: certificates
@@ -283,12 +287,16 @@ spec:
           resources: {{- include "common.resources.preset" (dict "type" .Values.resourcesPreset) | nindent 12 }}
           {{- end }}
           volumeMounts:
+          {{- if .Values.volumeMountsOverride }}
+          {{- toYaml .Values.volumeMountsOverride | nindent 12 }}
+          {{- else }}
             - name: moodle-data
               mountPath: /bitnami/moodle
               subPath: moodle
             - name: moodle-data
               mountPath: /bitnami/moodledata
               subPath: moodledata
+          {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 12 }}
             {{- end }}
@@ -322,6 +330,9 @@ spec:
         {{- include "common.tplvalues.render" (dict "value" .Values.sidecars "context" $) | nindent 8 }}
         {{- end }}
       volumes:
+      {{- if .Values.volumesOverride }}
+      {{- toYaml .Values.volumesOverride  | nindent 8 }}
+      {{- else }}
         - name: moodle-data
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
@@ -329,6 +340,7 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+      {{- end }}
         {{- if .Values.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
